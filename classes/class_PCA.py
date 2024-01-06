@@ -12,14 +12,18 @@ class PCA:
         # compute variance-covariaance MATRIXX of X (variance on the diagonal between same element ; other elements covariance between elements)
         # X * X transposed
         self.Cov=np.cov(m=X, rowvar=False) # we have the variables on the columns
-        print(self.Cov.shape)
+        #print(self.Cov.shape)
+
+
         # compute eigen values / vectors for variance-covariance matrix
         self.eigenvalues, self.eigenvectors = np.linalg.eigh(a=self.Cov)
-        print(self.eigenvalues,self.eigenvalues.shape)
-        print(self.eigenvectors.shape)
+        #print(self.eigenvalues,self.eigenvalues.shape)
+        #print(self.eigenvectors.shape)
+
+
         # sort the eigenvalues and eigenvector in a descending order
         k_desc = [k for  k in reversed(np.argsort(a=self.eigenvalues))] # reversed bc argsort gives ordered
-        print(k_desc)
+        #print(k_desc)
         # we apply the list of indeces to the matrix
         self.alpha=self.eigenvalues[k_desc] # list probably
         self.A = self.eigenvectors[:,k_desc] # eigenvectors is a matrix we  want to sort the column; all the lines k_desc column
@@ -31,6 +35,8 @@ class PCA:
                 #multiplying a eigenvector with a sclaar does not change the nature of an eigen vector
                 self.A[:,j] = (-1) * self.A[:,j]
         #print(self.A.shape)
+
+
         # compute the principal components
         #self.C=np.matmul(self.X,self.A)
         self.C = self.X @ self.A
@@ -59,8 +65,10 @@ class PCA:
         return self.C / np.sqrt(self.alpha)
 
     def getQualitObs(self):
-        SL = np.sum(a=self.C2, axis=1) # sums on the lines
-        return  np.transpose(self.C2 /SL) # we added transpose for matching shape reasons
+        SL = np.sum(a=self.C2, axis=1)
+        return (self.C2/SL[:,np.newaxis])
+        #return np.transpose(self.C2/SL)
+
 
     def getContribObs(self):
         return self.C2 / (self.X.shape[0] * self.alpha)
