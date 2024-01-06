@@ -70,10 +70,14 @@ modelPCA = pca.PCA(matrixstd)
 #eigen values and eigen vectors on the variance-covariance matrix ( in PCA class )
 alpha=modelPCA.getEigenValues()
 g.principalComponents(eigenvalues=alpha)
-g.show() # right now the graphic is incorect bc our eigenvalues are not descending order
+#g.show() # right now the graphic is incorect bc our eigenvalues are not descending order
 
 #fetch the principal components
 C = modelPCA.getPrinComp();
+#print(C) works
+#print(C*C)
+
+####---------------------------
 components = ['C'+str(j+1) for j in range(C.shape[1])]
 C_df=pd.DataFrame(data=C,index=obs,columns=components)
 #save the principal components ins s CSV file
@@ -84,7 +88,7 @@ Rxc = modelPCA.getFactorLoadings()
 # save the factor loadings into a CSV file
 Rxc_df = pd.DataFrame(data=Rxc,index=vars,columns=components)
 g.correlogram(matrix=Rxc_df,title='Correlogram of factor loadings')
-g.show()
+#g.show()
 
 
 #fetch the scores ( standardized principal components )
@@ -92,14 +96,16 @@ scores =  modelPCA.getScores()
 # save the score into a CSV file
 scores_df = pd.DataFrame(data=scores, index = obs, columns=components)
 g.correlogram(matrix=scores_df,title="Correlogram of scores")
-g.show()
+#g.show()
 
 
 #fetch the quality of observation on the reprezentation
 qualityObs = modelPCA.getQualitObs()
+print(qualityObs,type(qualityObs),qualityObs.shape)
 # save the qualiity of observation into a CSV file
 qualityObs_df = pd.DataFrame(data=qualityObs, index=obs,columns=components)
 g.correlogram(matrix=qualityObs_df,title='Correlogram of quality of observations')
+#g.show()
 
 # fetch hte observation contributions to the axes variance
 contribObs = modelPCA.getContribObs()
@@ -114,3 +120,8 @@ g.show()
 common = modelPCA.getCommonalities()
 #save the commonalities into a CSV file
 common_df=pd.DataFrame(data=common,index=vars, columns=components)
+common_df.to_excel('./dataOUT/Commonalities.xlsx')
+
+
+
+########################################################## START EFA ###########################################################
