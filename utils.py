@@ -15,3 +15,13 @@ def replaceNAN(data):
         data[locs] = means[locs[1]]
 
     return data
+
+
+# standarization - the final matrix to have mean 0 and sd 1 on each column
+# standard deviation = average distance from the average
+# standarization - how far the element is from the average of its own variable type
+# [ ni - n(mean) ] / sd ; ni-X matrix ; n(mean)-X(mean) for each column on the matrix; sd-sd for each column on the matrix
+def standardize(X): # assume that we recieve numpy.ndarray
+    means = np.mean(a=X, axis=0) #axis 0 - compute the means on the columns
+    stds = np.std(a=X,axis=0)
+    return (X-means) / stds

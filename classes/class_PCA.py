@@ -59,8 +59,8 @@ class PCA:
         return self.C / np.sqrt(self.alpha)
 
     def getQualitObs(self):
-        SL = np.sum(a=self.C2, axis=1) # sums on the lines
-        return  np.transpose(self.C2 /SL) # we added transpose for matching shape reasons
+        SL = np.sum(a=self.C2, axis=1)
+        return self.C2 /SL
 
     def getContribObs(self):
         return self.C2 / (self.X.shape[0] * self.alpha)
