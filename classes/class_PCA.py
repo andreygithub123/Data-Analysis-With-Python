@@ -66,8 +66,9 @@ class PCA:
 
     def getQualitObs(self):
         SL = np.sum(a=self.C2, axis=1)
-        return (self.C2/SL[:,np.newaxis])
+        return np.transpose(self.C2.T/SL)
         #return np.transpose(self.C2/SL)
+        #return np.transpose(self.C2/SL[:,np.newaxis)
 
 
     def getContribObs(self):

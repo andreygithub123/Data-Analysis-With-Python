@@ -112,7 +112,7 @@ contribObs = modelPCA.getContribObs()
 # save the obs
 contribObs_df = pd.DataFrame(data = contribObs,index = obs,columns=components)
 g.correlogram(matrix=contribObs_df, title='Observation contributions to the axes variance')
-g.show()
+
 
 ##comonalities how many PCA the observations have in common
 #matrix with elements partial sum : n1=n1 n2 = n1+n2 ; nm =n1+n2+...+nm
@@ -120,7 +120,9 @@ g.show()
 common = modelPCA.getCommonalities()
 #save the commonalities into a CSV file
 common_df=pd.DataFrame(data=common,index=vars, columns=components)
-common_df.to_excel('./dataOUT/Commonalities.xlsx')
+g.correlogram(matrix=common_df, title='Correlogram of commonalities')
+g.show()
+#common_df.to_excel('./dataOUT/Commonalities.xlsx')
 
 
 
